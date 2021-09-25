@@ -1,6 +1,7 @@
 package com.yazantarifi.android.reporter
 
 import android.content.Context
+import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.lang.Exception
@@ -41,8 +42,9 @@ object ShakeReporter {
             reporterFilesPath?.let {
                 try {
                     val currentTimestamp = getCurrentTimestamp()
-                    val targetCrashReportFile = File(reporterFilesPath, "${CRASH_FILE_PATH}-${currentTimestamp}.txt")
-                    val writer = FileWriter(targetCrashReportFile)
+                    val fileName = "${CRASH_FILE_PATH}-${currentTimestamp}.txt"
+                    val fullPath = reporterFilesPath.absolutePath + File.separator + fileName
+                    val writer = BufferedWriter(FileWriter(fullPath))
                     writer.append("Crash Exception Triggered On Thread : ${thread.name}")
                     writer.append("Record Timestamp : $currentTimestamp")
                     writer.append("Exception Message : ${throwable.message}")
@@ -50,7 +52,7 @@ object ShakeReporter {
                     writer.append("Exception StackTrace : ${throwable.stackTraceToString()}")
                     writer.flush()
                     writer.close()
-                    printLogs("Crash Report File Created : ${targetCrashReportFile.absoluteFile}")
+                    printLogs("Crash Report File Created : $fullPath")
                 } catch (ex: Exception) {
                     printLogs(ex.message ?: "", true)
                 }
