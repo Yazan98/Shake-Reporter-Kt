@@ -1,3 +1,4 @@
 
 rootProject.name = "Shake Reporter"
 include ':app'
+include ':reporter'
