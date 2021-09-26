@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crash Message"
         android:textColor="@color/background_color"
@@ -21,19 +21,17 @@
 
     <TextView
         android:id="@+id/crashMessageField"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="viewStart"
-        android:text="Crash Message"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        android:text="Crash Message"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:textAlignment="viewStart"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -44,19 +42,17 @@
 
     <TextView
         android:id="@+id/localizedMessageField"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textAlignment="viewStart"
         android:text="Crash Localized Message : "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:textAlignment="viewStart"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -67,7 +63,7 @@
 
     <TextView
         android:id="@+id/threadNameField"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:textAlignment="viewStart"
         android:layout_height="wrap_content"
         android:text="Thread Name"
@@ -77,13 +73,12 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Exception StackTrace"
         android:textAlignment="viewStart"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/threadNameField" />
 
