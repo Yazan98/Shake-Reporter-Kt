@@ -10,8 +10,8 @@ import java.util.*
 
 object ShakeReporter {
 
+    const val CRASH_FILE_PATH = "crashes"
     private const val FILES_ROOT_PATH = "ShakeReporter"
-    private const val CRASH_FILE_PATH = "crashes"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
 
     /**
@@ -19,24 +19,54 @@ object ShakeReporter {
      * Used To Save All Exceptions and Network Calls To See The History Via Notification
      * Here The Default Notification Channel Will Be Created
      */
+    @JvmStatic
     fun init(context: Context) {
         ReporterNotifications.createNotificationChannel(context)
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            val reporterFilesPath = File(context.filesDir, FILES_ROOT_PATH)
-            if (!reporterFilesPath.exists()) {
-                reporterFilesPath.mkdir()
-                printLogs("Create Root Crashes Path : ${reporterFilesPath.absoluteFile}")
-            }
-
-            createExceptionReport(thread, throwable, reporterFilesPath)
-            ReporterNotifications.showNotification(
-                getNotificationTitle(),
-                getNotificationMessage(thread, throwable),
-                context
-            )
+            onCrashTriggered(thread, throwable, context)
         }
     }
 
+    /**
+     * If You Want to Submit Crash in Custom Callback Use This Method
+     * You want To Add Extra Params Like Printing Non Fatal Crashes
+     * Print it on Callback then Call this Method to report the Crash Internally
+     */
+    @JvmStatic
+    fun onCrashTriggered(thread: Thread, throwable: Throwable, context: Context) {
+        val reporterFilesPath = File(context.filesDir, FILES_ROOT_PATH)
+        if (!reporterFilesPath.exists()) {
+            reporterFilesPath.mkdir()
+            printLogs("Create Root Crashes Path : ${reporterFilesPath.absoluteFile}")
+        }
+
+        createExceptionReport(thread, throwable, reporterFilesPath)
+        ReporterNotifications.showNotification(
+            getNotificationTitle(),
+            getNotificationMessage(thread, throwable),
+            context
+        )
+    }
+
+    /**
+     * Use this Method when you want to Submit Any Callback
+     * to do Custom Work on The Exceptions Then Will Call the Default
+     * Handler Automatic
+     */
+    @JvmStatic
+    fun init(context: Context, callback: ShakeReporterCallback) {
+        init(context)
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            callback.onExceptionTriggered(throwable)
+            onCrashTriggered(thread, throwable, context)
+        }
+    }
+
+    /**
+     * Each Crash Will be Saved in Application Private Storage to Access It From Screens
+     * This Method Don't need Storage Permission
+     * Each Exception Record is Saved in One File with Name : CRASH_FILE_PATH Variable
+     */
     private fun createExceptionReport(thread: Thread, throwable: Throwable, reporterFilesPath: File?) {
         Thread {
             reporterFilesPath?.let {

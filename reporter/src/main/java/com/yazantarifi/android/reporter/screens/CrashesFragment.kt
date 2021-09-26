@@ -73,7 +73,9 @@ class CrashesFragment: Fragment(R.layout.fragment_crashes) {
         val currentCrashesFiles = currentFiles[0].listFiles()
         for (item in currentCrashesFiles) {
             try {
-                items.add(getCrashItemFromFile(item))
+                if (item.absolutePath.contains(ShakeReporter.CRASH_FILE_PATH)) {
+                    items.add(getCrashItemFromFile(item))
+                }
             } catch (ex: Exception) {
                 ShakeReporter.printLogs(ex.message ?: "", true)
             }
