@@ -1,5 +1,6 @@
 package com.yazantarifi.android.reporter.screens
 
+import android.R.attr
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -15,6 +16,17 @@ import java.io.File
 import java.io.BufferedReader
 import java.io.FileReader
 import java.lang.Exception
+import android.R.attr.label
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
+
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 class CrashesFragment: Fragment(R.layout.fragment_crashes) {
 
@@ -40,7 +52,14 @@ class CrashesFragment: Fragment(R.layout.fragment_crashes) {
     }
 
     private fun onCrashItemClicked(item: CrashItem) {
+        val clipboard: ClipboardManager? = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clip = ClipData.newPlainText("Crash Report", """
+            Crash Message : ${item.message}
+            Crash StackTrace : ${item.stackTrace}
+        """.trimIndent())
+        clipboard?.setPrimaryClip(clip)
 
+        Toast.makeText(requireContext(), "Crash Info in Clipboard Now", Toast.LENGTH_SHORT).show()
     }
 
     private fun getItems(): ArrayList<CrashItem> {
