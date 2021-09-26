@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
+        <entry key="reporter/src/main/res/layout/crashes_row.xml" value="0.25" />
         <entry key="reporter/src/main/res/layout/fragment_crashes.xml" value="0.1503623188405797" />
         <entry key="reporter/src/main/res/layout/fragment_network_calls.xml" value="0.1503623188405797" />
         <entry key="reporter/src/main/res/layout/screen_shake_reporter.xml" value="0.1503623188405797" />

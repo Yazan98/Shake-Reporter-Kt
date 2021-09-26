@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         crashButton?.setOnClickListener {
-            throw NullPointerException("Exception Happend .... in Main Activity")
+            throw NullPointerException("Null Exception Happend")
         }
     }
 

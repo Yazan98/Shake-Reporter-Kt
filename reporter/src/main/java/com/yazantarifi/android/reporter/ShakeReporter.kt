@@ -45,11 +45,16 @@ object ShakeReporter {
                     val fileName = "${CRASH_FILE_PATH}-${currentTimestamp}.txt"
                     val fullPath = reporterFilesPath.absolutePath + File.separator + fileName
                     val writer = BufferedWriter(FileWriter(fullPath))
-                    writer.append("Crash Exception Triggered On Thread : ${thread.name}")
-                    writer.append("Record Timestamp : $currentTimestamp")
-                    writer.append("Exception Message : ${throwable.message}")
-                    writer.append("Exception Localized Message : ${throwable.localizedMessage}")
-                    writer.append("Exception StackTrace : ${throwable.stackTraceToString()}")
+                    writer.append("${thread.name}\n")
+                    writer.append("----------------------------------\n")
+                    writer.append(currentTimestamp + "\n")
+                    writer.append("----------------------------------\n")
+                    writer.append("${throwable.message}\n")
+                    writer.append("----------------------------------\n")
+                    writer.append("${throwable.localizedMessage}\n")
+                    writer.append("----------------------------------\n")
+                    writer.append("${throwable.stackTraceToString()}\n")
+                    writer.append("----------------------------------\n")
                     writer.flush()
                     writer.close()
                     printLogs("Crash Report File Created : $fullPath")
@@ -66,7 +71,7 @@ object ShakeReporter {
 
     private fun getCurrentTimestamp(): String {
         val c = Calendar.getInstance().time
-        val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+        val df = SimpleDateFormat("yyyy-MM-dd:HH:mm:ss", Locale.getDefault())
         return df.format(c)
     }
 
