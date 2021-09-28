@@ -11,6 +11,7 @@ import java.util.*
 object ShakeReporter {
 
     const val CRASH_FILE_PATH = "crashes"
+    const val PATH_SPLITTER = "-----"
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
 

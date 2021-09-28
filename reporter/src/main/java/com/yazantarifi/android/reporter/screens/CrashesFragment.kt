@@ -30,6 +30,14 @@ import androidx.core.content.ContextCompat.getSystemService
 
 class CrashesFragment: Fragment(R.layout.fragment_crashes) {
 
+    private var stepNumber = 0
+    companion object {
+        private const val THREAD_NAME_POSITION = 0
+        private const val TIMESTAMP_POSITION = 1
+        private const val MESSAGE_POSITION = 2
+        private const val LOCALIZED_MESSAGE_POSITION = 3
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCrashesRecyclerView()
@@ -90,25 +98,24 @@ class CrashesFragment: Fragment(R.layout.fragment_crashes) {
         var stackTrace = ""
         var message = ""
         var localizedMessage = ""
-        var stepNumber = 0
         br.use { br ->
             var line: String?
             while (br.readLine().also { line = it } != null) {
                 val targetLine = line ?: ""
-                if (!targetLine.contains("-----")) {
+                if (!targetLine.contains(ShakeReporter.PATH_SPLITTER)) {
                     when (stepNumber) {
-                        0 -> threadName = targetLine.trim()
-                        1 -> timestamp = targetLine.trim()
-                        2 -> message = targetLine.trim()
-                        3 -> localizedMessage = targetLine.trim()
+                        THREAD_NAME_POSITION -> threadName = targetLine.trim()
+                        TIMESTAMP_POSITION -> timestamp = targetLine.trim()
+                        MESSAGE_POSITION -> message = targetLine.trim()
+                        LOCALIZED_MESSAGE_POSITION -> localizedMessage = targetLine.trim()
                     }
                 }
 
-                if (targetLine.contains("-----")) {
+                if (targetLine.contains(ShakeReporter.PATH_SPLITTER)) {
                     stepNumber += 1
                 }
 
-                if (!targetLine.contains("-----") && stepNumber > 3) {
+                if (!targetLine.contains(ShakeReporter.PATH_SPLITTER) && stepNumber > 3) {
                     stackTrace += targetLine.trim() + "\n"
                 }
             }
