@@ -1,12 +1,19 @@
 package com.yazantarifi.android.reporter
 
 import android.content.Context
+import android.content.Context.SENSOR_SERVICE
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import com.yazantarifi.android.reporter.screens.ShakeReporterScreen
+
 
 object ShakeReporter {
 
@@ -14,6 +21,40 @@ object ShakeReporter {
     const val PATH_SPLITTER = "-----"
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
+    private var sensorAccel = 10f
+    private var sensorAccelCurrent = SensorManager.GRAVITY_EARTH
+    private var sensorAccelLast = SensorManager.GRAVITY_EARTH
+
+    /**
+     * Init Shake Sensor In Any Screen
+     * The Shake Sensor Once Triggered Will Start the Reporter Screen
+     * To Show All Data In History for Crashes, Network Requests
+     * Usually Add this Line in Base Screen in Your Application
+     * To Be Handled in All Screens In Debug Mode or Dev Build
+     */
+    @JvmStatic
+    fun startSensorListener(context: Context) {
+        (context.getSystemService(SENSOR_SERVICE) as? SensorManager)?.let {
+            it.registerListener(object: SensorEventListener {
+                override fun onAccuracyChanged(p0: Sensor?, p1: Int) = Unit
+                override fun onSensorChanged(event: SensorEvent?) {
+                    event?.let {
+                        val x: Float = event.values[0]
+                        val y: Float = event.values[1]
+                        val z: Float = event.values[2]
+                        sensorAccelLast = sensorAccelCurrent
+                        sensorAccelCurrent = Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+                        val delta: Float = sensorAccelCurrent - sensorAccelLast
+                        sensorAccel = sensorAccel * 0.9f + delta
+                        if (sensorAccel > 12) {
+                            ShakeReporterScreen.startScreen(context)
+                        }
+                    }
+                }
+            }, it.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
 
     /**
      * Init The Library With Storage Path and Generated File in Private Storage for Application

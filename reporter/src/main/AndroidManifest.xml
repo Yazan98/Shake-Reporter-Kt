@@ -7,6 +7,7 @@
         <activity
             android:name=".screens.ShakeReporterScreen"
             android:theme="@style/Theme.ScreenTheme"
+            android:launchMode="singleTop"
             android:screenOrientation="fullSensor" />
 
     </application>

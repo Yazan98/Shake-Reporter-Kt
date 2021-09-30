@@ -1,8 +1,11 @@
 package com.yazantarifi.android.reporter.screens
 
-import android.R.attr
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,23 +15,11 @@ import com.yazantarifi.android.reporter.adapter.crashes.CrashItem
 import com.yazantarifi.android.reporter.adapter.crashes.CrashesAdapter
 import com.yazantarifi.android.reporter.adapter.listeners.CrashClickListener
 import kotlinx.android.synthetic.main.fragment_crashes.*
-import java.io.File
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileReader
-import java.lang.Exception
-import android.R.attr.label
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.widget.Toast
-
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
-
-class CrashesFragment: Fragment(R.layout.fragment_crashes) {
+class CrashesFragment : Fragment(R.layout.fragment_crashes) {
 
     private var stepNumber = 0
     companion object {
@@ -46,9 +37,19 @@ class CrashesFragment: Fragment(R.layout.fragment_crashes) {
     private fun setupCrashesRecyclerView() {
         try {
             crashesRecyclerView?.apply {
+                val crashes = getItems()
+                if (crashes.isNullOrEmpty()) {
+                    noResults?.visibility = View.VISIBLE
+                    this.visibility = View.GONE
+                    return
+                } else {
+                    noResults?.visibility = View.GONE
+                    this.visibility = View.VISIBLE
+                }
+
                 this.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
                 this.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-                this.adapter = CrashesAdapter(getItems(), object: CrashClickListener {
+                this.adapter = CrashesAdapter(crashes, object : CrashClickListener {
                     override fun onCrashItemClick(item: CrashItem) {
                         onCrashItemClicked(item)
                     }
@@ -60,11 +61,14 @@ class CrashesFragment: Fragment(R.layout.fragment_crashes) {
     }
 
     private fun onCrashItemClicked(item: CrashItem) {
-        val clipboard: ClipboardManager? = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-        val clip = ClipData.newPlainText("Crash Report", """
+        val clipboard: ClipboardManager? =
+            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clip = ClipData.newPlainText(
+            "Crash Report", """
             Crash Message : ${item.message}
             Crash StackTrace : ${item.stackTrace}
-        """.trimIndent())
+        """.trimIndent()
+        )
         clipboard?.setPrimaryClip(clip)
 
         Toast.makeText(requireContext(), "Crash Info in Clipboard Now", Toast.LENGTH_SHORT).show()

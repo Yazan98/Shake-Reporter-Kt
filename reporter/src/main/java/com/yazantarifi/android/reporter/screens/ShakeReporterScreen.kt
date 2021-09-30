@@ -1,5 +1,7 @@
 package com.yazantarifi.android.reporter.screens
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -10,9 +12,30 @@ import kotlinx.android.synthetic.main.screen_shake_reporter.*
 
 class ShakeReporterScreen: AppCompatActivity() {
 
+    companion object {
+        @JvmStatic
+        fun startScreen(context: Context) {
+            Intent(context, ShakeReporterScreen::class.java).apply {
+                this.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                this.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                this.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                context.startActivity(this)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.screen_shake_reporter)
+        startScreen()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        startScreen()
+    }
+
+    private fun startScreen() {
         setupViewPagerContent()
         setupTabLayoutContent()
     }

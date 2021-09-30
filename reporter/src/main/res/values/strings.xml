@@ -2,4 +2,5 @@
 <resources>
     <string name="requests">Requests</string>
     <string name="crashes">Crashes</string>
+    <string name="no_results_found">No Results Found</string>
 </resources>
