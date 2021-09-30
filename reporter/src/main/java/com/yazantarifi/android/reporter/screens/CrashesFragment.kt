@@ -61,8 +61,7 @@ class CrashesFragment : Fragment(R.layout.fragment_crashes) {
     }
 
     private fun onCrashItemClicked(item: CrashItem) {
-        val clipboard: ClipboardManager? =
-            requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clipboard: ClipboardManager? = requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         val clip = ClipData.newPlainText(
             "Crash Report", """
             Crash Message : ${item.message}
