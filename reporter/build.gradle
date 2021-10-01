@@ -9,7 +9,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 
 ext {
     PUBLISH_GROUP_ID = 'com.yazantarifi'
-    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_VERSION = '1.1.0'
     PUBLISH_ARTIFACT_ID = 'shake-reporter'
     PUBLISH_DESCRIPTION = 'Shake Reporting To Report Android Crashes, Application Requests'
     PUBLISH_URL = 'https://github.com/Yazan98/Shake-Reporter-Kt'
