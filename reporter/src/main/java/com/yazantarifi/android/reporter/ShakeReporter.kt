@@ -21,9 +21,6 @@ object ShakeReporter {
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
     private const val NETWORK_REQUESTS_FILE_NAME = "Network-Requests"
-    private var sensorAccel = 10f
-    private var sensorAccelCurrent = SensorManager.GRAVITY_EARTH
-    private var sensorAccelLast = SensorManager.GRAVITY_EARTH
     const val CRASH_FILE_PATH = "crashes"
     const val PATH_SPLITTER = "-----"
 
@@ -35,26 +32,21 @@ object ShakeReporter {
      * To Be Handled in All Screens In Debug Mode or Dev Build
      */
     @JvmStatic
-    fun startSensorListener(context: Context) {
+    fun startSensorListener(context: Context, listener: ShakeSensorListener) {
         (context.getSystemService(SENSOR_SERVICE) as? SensorManager)?.let {
-            it.registerListener(object: SensorEventListener {
-                override fun onAccuracyChanged(p0: Sensor?, p1: Int) = Unit
-                override fun onSensorChanged(event: SensorEvent?) {
-                    event?.let {
-                        val x: Float = event.values[0]
-                        val y: Float = event.values[1]
-                        val z: Float = event.values[2]
-                        sensorAccelLast = sensorAccelCurrent
-                        sensorAccelCurrent = Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
-                        val delta: Float = sensorAccelCurrent - sensorAccelLast
-                        sensorAccel = sensorAccel * 0.9f + delta
-                        if (sensorAccel > 12) {
-                            ShakeReporterScreen.startScreen(context)
-                        }
-                    }
-                }
-            }, it.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            it.registerListener(listener, it.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
             SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    /**
+     * Use This Method in OnDestroy of the Activity To Remove the Shake Listener
+     * and Un Register The Listeners of the Sensor
+     */
+    @JvmStatic
+    fun destroySensorListener(context: Context, listener: ShakeSensorListener) {
+        (context.getSystemService(SENSOR_SERVICE) as? SensorManager)?.let {
+            it.unregisterListener(listener)
         }
     }
 
@@ -138,7 +130,7 @@ object ShakeReporter {
                     throwable.stackTrace.forEach {
                         stackTraceString += it.toString() + "\n"
                     }
-                    
+
                     writer.append("${stackTraceString}\n")
                     writer.append("----------------------------------\n")
                     writer.flush()

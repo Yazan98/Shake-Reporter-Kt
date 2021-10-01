@@ -14,6 +14,7 @@ import com.yazantarifi.android.reporter.adapter.network.NetworkItemsAdapter
 import kotlinx.android.synthetic.main.fragment_network_calls.*
 import java.io.BufferedReader
 import java.io.FileReader
+import java.lang.Exception
 
 class NetworkCallsFragment: Fragment(R.layout.fragment_network_calls) {
 
@@ -45,7 +46,11 @@ class NetworkCallsFragment: Fragment(R.layout.fragment_network_calls) {
     }
 
     private fun onNetworkItemClickedListener(item: NetworkItem) {
-
+        try {
+            NetworkRequestInfoDialog.showDialog(requireActivity(), item)
+        } catch (ex: Exception) {
+            ShakeReporter.printLogs(ex?.message ?: "", true)
+        }
     }
 
     private fun getItems(): ArrayList<NetworkItem> {
@@ -65,7 +70,6 @@ class NetworkCallsFragment: Fragment(R.layout.fragment_network_calls) {
                     if (!targetLine.contains(ReporterInterceptor.SECTION_KEY)) {
                         when (stepIndex) {
                             ReporterInterceptor.URL_INDEX -> currentItem.requestUrl = targetLine
-                            ReporterInterceptor.CACHE_CONTROL -> currentItem.requestCacheControl = targetLine
                             ReporterInterceptor.HEADERS_INDEX -> currentItem.requestHeaders = targetLine
                             ReporterInterceptor.METHOD_INDEX -> currentItem.requestMethod = targetLine
                             ReporterInterceptor.REQUEST_TIME -> currentItem.responseTime = targetLine

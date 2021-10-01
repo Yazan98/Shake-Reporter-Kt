@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.yazantarifi.android.reporter.ReporterInterceptor
 import com.yazantarifi.android.reporter.ShakeReporter
+import com.yazantarifi.android.reporter.ShakeSensorListener
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ShakeReporter.startSensorListener(this)
+        ShakeReporter.startSensorListener(this, ShakeSensorListener(this))
         crashButton?.setOnClickListener {
             throw NullPointerException("Null Exception Happend")
         }
