@@ -21,6 +21,7 @@ object ShakeReporter {
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
     const val NETWORK_REQUESTS_FILE_NAME = "Network-Requests"
+    const val CRASHES_FILE_NAME = "Crashes-Report"
     const val LIBRARY_NAME = "ShakeReporter"
     const val CRASH_FILE_PATH = "crashes"
     const val PATH_SPLITTER = "-----"
@@ -81,7 +82,7 @@ object ShakeReporter {
         )
     }
 
-    private fun getShakeReporterRootFile(context: Context): File {
+    fun getShakeReporterRootFile(context: Context): File {
         val reporterFilesPath = File(context.filesDir, FILES_ROOT_PATH)
         if (!reporterFilesPath.exists()) {
             reporterFilesPath.mkdir()

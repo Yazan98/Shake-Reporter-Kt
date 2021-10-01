@@ -2,7 +2,6 @@ package com.yazantarifi.android.reporter.screens
 
 import android.Manifest
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,12 +19,9 @@ import com.google.android.material.tabs.TabLayout
 import com.yazantarifi.android.reporter.R
 import com.yazantarifi.android.reporter.ShakeReporter
 import com.yazantarifi.android.reporter.ShakeReporterPagerAdapter
-import com.yazantarifi.android.reporter.adapter.network.NetworkItem
 import kotlinx.android.synthetic.main.screen_shake_reporter.*
 import java.io.*
 import java.lang.Exception
-import java.nio.file.Files.exists
-
 
 class ShakeReporterScreen: AppCompatActivity() {
 
@@ -142,11 +138,43 @@ class ShakeReporterScreen: AppCompatActivity() {
             }
 
             createNetworkCallsReportFile(it)
+            createCrashesReportFile(it)
             Toast.makeText(
                 this@ShakeReporterScreen,
                 getString(R.string.report_created),
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun createCrashesReportFile(rootFile: File) {
+        val tokensArray = ArrayList<String>()
+        ShakeReporter.getShakeReporterRootFile(applicationContext).let {
+            it.listFiles()?.forEach {
+                if (it.absolutePath.contains(ShakeReporter.CRASH_FILE_PATH)) {
+                    val br = BufferedReader(FileReader(it))
+                    br.use { br ->
+                        var line: String?
+                        while (br.readLine().also { line = it } != null) {
+                            val targetLine = line ?: ""
+                            tokensArray.add(targetLine)
+                        }
+                        tokensArray.add("End Of Crash --------------------")
+                    }
+                }
+            }
+
+            try {
+                val fullPath = rootFile.absolutePath + File.separator + ShakeReporter.CRASHES_FILE_NAME + ".txt"
+                val writer = BufferedWriter(FileWriter(fullPath))
+                tokensArray.forEach {
+                    writer.append(it + "\n")
+                }
+                writer.flush()
+                writer.close()
+            } catch (ex: Exception) {
+                ShakeReporter.printLogs(ex.message ?: "", true)
+            }
         }
     }
 
