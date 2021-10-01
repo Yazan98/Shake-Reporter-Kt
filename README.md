@@ -15,7 +15,7 @@ and Clicking on the Notification will Show Screen with The History of Crashes
 
 ### The Problem
 The Main Problem To use This Library When You create Application For Staging Build Without Crashlytics Configuration
-You can Use this Method To Report Crashes On Not Debuggable Builds
+You can Use this Library To Report Crashes and Network Requests On Not Debuggable Builds (Release Builds Only)
 
 The Library Screen is Accessible Via Icon in Launcher or Shake the Screen Feature Depends if the Shake is Enabled or Not
 
