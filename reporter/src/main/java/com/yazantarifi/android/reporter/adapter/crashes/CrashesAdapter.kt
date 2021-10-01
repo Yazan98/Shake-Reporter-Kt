@@ -14,7 +14,7 @@ class CrashesAdapter constructor(
 ): RecyclerView.Adapter<CrashesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrashesViewHolder {
-        return CrashesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.crashes_row, null, false))
+        return CrashesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.crashes_row, parent, false))
     }
 
     @SuppressLint("SetTextI18n")

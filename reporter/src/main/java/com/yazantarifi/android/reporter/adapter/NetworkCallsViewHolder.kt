@@ -10,7 +10,10 @@ class NetworkCallsViewHolder constructor(view: View): RecyclerView.ViewHolder(vi
     val requestMethod: TextView? = view.textView8
     val requestHeaders: TextView? = view.headers
     val time: TextView? = view.time
+    val responseHeadersPlaceHolder: TextView? = view.textView12
     val responseHeaders: TextView? = view.responseHeaders
+    val responseHeadersPlaceHolders: TextView? = view.textView9
+    val responseBodyHolder: TextView? = view.textView12
     val responseBody: TextView? = view.responseBody
     val viewContainer: View? = view.viewContainer
 }
