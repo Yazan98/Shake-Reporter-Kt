@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         ShakeReporter.startSensorListener(this, ShakeSensorListener(this))
         crashButton?.setOnClickListener {
-            throw NullPointerException("Null Exception Happend")
+            throw ArrayIndexOutOfBoundsException("Index 7 > 3, Invalid Index In Array")
         }
 
         requestItem?.setOnClickListener {

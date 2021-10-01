@@ -124,6 +124,7 @@ class CrashesFragment : Fragment(R.layout.fragment_crashes) {
             }
         }
 
+        stepNumber = 0
         return CrashItem(message, stackTrace, localizedMessage, timestamp, threadName)
     }
 

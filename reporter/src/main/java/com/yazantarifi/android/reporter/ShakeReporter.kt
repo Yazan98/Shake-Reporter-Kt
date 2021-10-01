@@ -82,6 +82,13 @@ object ShakeReporter {
         )
     }
 
+    /**
+     * ALL Crashes File Will be Stored in One Parent File Inside Private Storage of the Application
+     * This Method Will Return the Root of the Stored Files To Loop On Them
+     * Each Time The Library want To Read the Recorded Exceptions
+     *
+     * Just for Internal Usage Should Not Used from Apps
+     */
     fun getShakeReporterRootFile(context: Context): File {
         val reporterFilesPath = File(context.filesDir, FILES_ROOT_PATH)
         if (!reporterFilesPath.exists()) {
@@ -125,7 +132,7 @@ object ShakeReporter {
                     writer.append("----------------------------------\n")
                     writer.append("${throwable.message}\n")
                     writer.append("----------------------------------\n")
-                    writer.append("${throwable.localizedMessage}\n")
+                    writer.append("${throwable.javaClass.simpleName}\n")
                     writer.append("----------------------------------\n")
 
                     var stackTraceString = ""
@@ -138,6 +145,12 @@ object ShakeReporter {
                     writer.flush()
                     writer.close()
                     printLogs("Crash Report File Created : $fullPath")
+                    printLogs("Print Crash Info : " + """
+                        Crash : ${throwable.message}
+                        Localized Message : ${throwable.localizedMessage}
+                        To String : ${throwable.toString()}
+                        Name : ${throwable.javaClass.simpleName}
+                    """.trimIndent())
                 } catch (ex: Exception) {
                     printLogs(ex.message ?: "", true)
                 }
