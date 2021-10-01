@@ -7,10 +7,12 @@ import android.app.NotificationChannel
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.BitmapFactory
 
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import com.yazantarifi.android.reporter.screens.ShakeReporterScreen
 import java.lang.Exception
 import kotlin.random.Random
@@ -50,13 +52,17 @@ object ReporterNotifications {
             val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
             val builder = NotificationCompat.Builder(context, NOTIFICATION_ID)
-                .setSmallIcon(R.drawable.logo)
+                .setLargeIcon(BitmapFactory.decodeResource(context.resources , R.drawable.large_logo))
                 .setContentTitle(title)
                 .setContentText(message)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_ERROR)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                builder.setSmallIcon(IconCompat.createWithResource(context, R.drawable.small_logo))
+            }
 
             with(NotificationManagerCompat.from(context)) {
                 notify(getNotificationId(), builder.build())

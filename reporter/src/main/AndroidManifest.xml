@@ -3,19 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yazantarifi.android.reporter">
 
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29"
         tools:ignore="ScopedStorage" />
 
-    <application
-        android:requestLegacyExternalStorage="true">
+    <application android:requestLegacyExternalStorage="true">
+
+        <activity-alias
+            android:name="com.yazantarifi.reporter.screens.ShakeReporterScreen"
+            android:banner="@mipmap/app_icon"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/app_icon"
+            android:label="@string/app_name"
+            android:targetActivity=".screens.ShakeReporterScreen"
+            android:taskAffinity="com.yazantarifi.reporter.${applicationId}"
+            android:theme="@style/Theme.ScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!-- Android TV launcher intent -->
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <activity
             android:name=".screens.ShakeReporterScreen"
-            android:theme="@style/Theme.ScreenTheme"
+            android:icon="@mipmap/app_icon"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:taskAffinity="com.yazantarifi.reporter.${applicationId}"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor"
+            android:theme="@style/Theme.ScreenTheme" />
 
     </application>
 
