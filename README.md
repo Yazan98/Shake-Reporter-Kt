@@ -46,7 +46,7 @@ dependencies {
 
 1. Initialize The Library To Declare Crashes Report Listener
 
-> Init has 2 Methods One to Override Default Listener and Another One to Trigger Exception if You want Addetional Work
+> Init has 2 Methods One to Override Default Listener and Another One to Trigger Exception if You want Additional Work
 
 ```
 class ApplicationInstance: Application() {
