@@ -20,7 +20,8 @@ object ShakeReporter {
     var networkRequestsFile: File? = null
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
-    private const val NETWORK_REQUESTS_FILE_NAME = "Network-Requests"
+    const val NETWORK_REQUESTS_FILE_NAME = "Network-Requests"
+    const val LIBRARY_NAME = "ShakeReporter"
     const val CRASH_FILE_PATH = "crashes"
     const val PATH_SPLITTER = "-----"
 
