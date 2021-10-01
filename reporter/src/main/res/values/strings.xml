@@ -12,6 +12,6 @@
     <string name="response_body">Response Body</string>
     <string name="export_report">Export Report</string>
     <string name="export_title">Export Report</string>
-    <string name="export_message">Do you Want Android Reporter Screen To Export Report Files into Your Downloads Folder ?</string>
+    <string name="export_message">Do you Want Android Reporter Screen To Export Report Files into Your External Media Directory (Android/media/appPackage/Reports) ?</string>
     <string name="report_created">Report Created Successfully !!</string>
 </resources>
