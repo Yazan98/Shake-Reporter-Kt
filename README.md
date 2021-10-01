@@ -13,6 +13,10 @@ also Crashlytics Sometimes Take Too Much Time to Push Crashes to Crashlytics Das
 for This Reason this Library Will show Notification Once UncaughtExceptionHandler Triggered an Exception
 and Clicking on the Notification will Show Screen with The History of Crashes
 
+### The Problem
+The Main Problem To use This Library When You create Application For Staging Build Without Crashlytics Configuration
+You can Use this Method To Report Crashes On Not Debuggable Builds
+
 The Library Screen is Accessible Via Icon in Launcher or Shake the Screen Feature Depends if the Shake is Enabled or Not
 
 ## Supported Features
