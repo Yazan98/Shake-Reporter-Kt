@@ -17,6 +17,7 @@ import com.yazantarifi.android.reporter.screens.ShakeReporterScreen
 
 object ShakeReporter {
 
+    var networkRequestsFile: File? = null
     private const val FILES_ROOT_PATH = "ShakeReporter"
     private const val LOGGING_PREFIX = "[ShakeReporter]:"
     private const val NETWORK_REQUESTS_FILE_NAME = "Network-Requests"
@@ -154,7 +155,7 @@ object ShakeReporter {
         Thread {
             try {
                 reporterFilesPath?.let {
-                    File(it.absolutePath, NETWORK_REQUESTS_FILE_NAME).apply {
+                    networkRequestsFile = File(it.absolutePath, NETWORK_REQUESTS_FILE_NAME).apply {
                         if (!this.exists()) {
                             this.createNewFile()
                             printLogs("Network Requests File Created : ${this.absolutePath}")

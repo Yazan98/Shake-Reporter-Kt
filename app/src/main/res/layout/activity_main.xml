@@ -12,4 +12,13 @@
         android:id="@+id/crashButton"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Execute request"
+        android:layout_marginTop="10dp"
+        android:id="@+id/requestItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/crashButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

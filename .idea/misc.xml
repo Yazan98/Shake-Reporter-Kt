@@ -7,6 +7,7 @@
         <entry key="reporter/src/main/res/layout/crashes_row.xml" value="0.25" />
         <entry key="reporter/src/main/res/layout/fragment_crashes.xml" value="0.1503623188405797" />
         <entry key="reporter/src/main/res/layout/fragment_network_calls.xml" value="0.1503623188405797" />
+        <entry key="reporter/src/main/res/layout/row_network_item.xml" value="0.25" />
         <entry key="reporter/src/main/res/layout/screen_shake_reporter.xml" value="0.1503623188405797" />
       </map>
     </option>

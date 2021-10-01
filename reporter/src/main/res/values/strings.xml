@@ -3,4 +3,11 @@
     <string name="requests">Requests</string>
     <string name="crashes">Crashes</string>
     <string name="no_results_found">No Results Found</string>
+    <string name="no_results">No Results</string>
+    <string name="request_url">Request Url</string>
+    <string name="request_method">Request Method</string>
+    <string name="request_headers">Request Headers</string>
+    <string name="request_time">Request Time</string>
+    <string name="response_headers">Response Headers</string>
+    <string name="response_body">Response Body</string>
 </resources>
