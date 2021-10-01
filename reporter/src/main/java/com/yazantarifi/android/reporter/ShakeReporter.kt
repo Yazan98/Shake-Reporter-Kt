@@ -133,7 +133,13 @@ object ShakeReporter {
                     writer.append("----------------------------------\n")
                     writer.append("${throwable.localizedMessage}\n")
                     writer.append("----------------------------------\n")
-                    writer.append("${throwable.stackTraceToString()}\n")
+
+                    var stackTraceString = ""
+                    throwable.stackTrace.forEach {
+                        stackTraceString += it.toString() + "\n"
+                    }
+                    
+                    writer.append("${stackTraceString}\n")
                     writer.append("----------------------------------\n")
                     writer.flush()
                     writer.close()

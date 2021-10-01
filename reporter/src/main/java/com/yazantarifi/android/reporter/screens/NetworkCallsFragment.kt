@@ -38,13 +38,13 @@ class NetworkCallsFragment: Fragment(R.layout.fragment_network_calls) {
             this.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             this.adapter = NetworkItemsAdapter(networkItems, object: NetworkItemClickListener {
                 override fun onNetworkItemClicked(item: NetworkItem) {
-                    onNetworkItemClicked(item)
+                    onNetworkItemClickedListener(item)
                 }
             })
         }
     }
 
-    private fun onNetworkItemClicked(item: NetworkItem) {
+    private fun onNetworkItemClickedListener(item: NetworkItem) {
 
     }
 
@@ -70,7 +70,7 @@ class NetworkCallsFragment: Fragment(R.layout.fragment_network_calls) {
                             ReporterInterceptor.METHOD_INDEX -> currentItem.requestMethod = targetLine
                             ReporterInterceptor.REQUEST_TIME -> currentItem.responseTime = targetLine
                             ReporterInterceptor.RESPONSE_CODE -> currentItem.responseCode = targetLine
-                            ReporterInterceptor.RESPONSE_HEADERS -> currentItem.responseHeaders = targetLine
+                            ReporterInterceptor.RESPONSE_HEADERS -> currentItem.responseHeaders += targetLine + "\n"
                             ReporterInterceptor.RESPONSE_BODY -> currentItem.responseBody += targetLine
                         }
                     }
